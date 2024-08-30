@@ -24,7 +24,7 @@ export const Gallery = () => {
           {photos.map((photo) => (
             <Photo
               key={photo.filename_disk}
-              name={photo.filename_disk}
+              name={photo.filename_download}
               src={photo.filename_disk}
             />
           ))}
