@@ -22,7 +22,11 @@ export const Gallery = () => {
       <Container>
         <Grid>
           {photos.map((photo) => (
-            <Photo key={photo.filename_disk} name={photo.filename_disk} src={photo.filename_disk} />
+            <Photo
+              key={photo.filename_disk}
+              name={photo.filename_disk}
+              src={photo.filename_disk}
+            />
           ))}
         </Grid>
       </Container>

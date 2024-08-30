@@ -1,7 +1,7 @@
 import { GridCol, Image } from "@mantine/core";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-export const Photo = ({name, src}) => {
+export const Photo = ({ name, src }) => {
   return (
     <GridCol key={name} span={4}>
       <Image
@@ -16,5 +16,5 @@ export const Photo = ({name, src}) => {
 
 Photo.propTypes = {
   name: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired
+  src: PropTypes.string.isRequired,
 };
