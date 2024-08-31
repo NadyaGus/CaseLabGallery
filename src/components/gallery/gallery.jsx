@@ -1,4 +1,4 @@
-import { Container, Grid, Image, Title } from "@mantine/core";
+import { Container, Grid, Image } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { client } from "../../service/client";
 import { Photo } from "../photo/photo";
@@ -7,6 +7,8 @@ import { observer } from "mobx-react-lite";
 import { PhotoStore } from "../../app/store/photoStore";
 import { Modal } from "@mantine/core";
 import PropTypes from "prop-types";
+
+import classes from "./gallery.module.css";
 
 const GalleryView = ({ store }) => {
   const [photos, setPhotos] = useState([]);
@@ -32,20 +34,24 @@ const GalleryView = ({ store }) => {
 
   return (
     <main>
-      <Container>
-        <Grid gutter={40}>
+      <Container p={0}>
+        <Grid gutter={40} m={20}>
           {store.photos.map((photo) => (
             <Photo key={photo.id} open={open} photo={photo} store={store} />
           ))}
         </Grid>
 
-        <Modal opened={opened} onClose={close} centered>
+        <Modal
+          className={classes.modal}
+          opened={opened}
+          onClose={close}
+          centered
+          trapFocus={false}
+          title={store.openedPhoto?.title ?? "No title"}
+        >
           <Image
             src={`http://localhost:8055/assets/${store.openedPhoto?.filename_disk}`}
           ></Image>
-          <Title ta={"center"} order={2}>
-            {store.openedPhoto?.title ?? "No title"}
-          </Title>
         </Modal>
       </Container>
     </main>

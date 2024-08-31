@@ -8,7 +8,7 @@ export class PhotoStore {
     makeAutoObservable(this);
     autorun(() => {
       this.logStoreData();
-    })
+    });
   }
 
   get totalPhotos() {
