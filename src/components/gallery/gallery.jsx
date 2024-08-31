@@ -1,10 +1,17 @@
-import { Container, Grid } from "@mantine/core";
+import { Container, Grid, Image, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { client } from "../../service/client";
 import { Photo } from "../photo/photo";
+import { useDisclosure } from "@mantine/hooks";
+import { observer } from "mobx-react-lite";
+import { PhotoStore } from "../../app/store/photoStore";
+import { Modal } from "@mantine/core";
+import PropTypes from "prop-types";
 
-export const Gallery = () => {
+const GalleryView = ({ store }) => {
   const [photos, setPhotos] = useState([]);
+
+  const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
     client
@@ -17,19 +24,36 @@ export const Gallery = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (photos.length > 0) {
+      photos.map((photo) => store.addPhoto(photo));
+    }
+  }, [photos, store]);
+
   return (
-    <section>
+    <main>
       <Container>
-        <Grid>
-          {photos.map((photo) => (
-            <Photo
-              key={photo.filename_disk}
-              name={photo.filename_download}
-              src={photo.filename_disk}
-            />
+        <Grid gutter={40}>
+          {store.photos.map((photo) => (
+            <Photo key={photo.id} open={open} photo={photo} store={store} />
           ))}
         </Grid>
+
+        <Modal opened={opened} onClose={close} centered>
+          <Image
+            src={`http://localhost:8055/assets/${store.openedPhoto?.filename_disk}`}
+          ></Image>
+          <Title ta={"center"} order={2}>
+            {store.openedPhoto?.title ?? "No title"}
+          </Title>
+        </Modal>
       </Container>
-    </section>
+    </main>
   );
 };
+
+GalleryView.propTypes = {
+  store: PropTypes.instanceOf(PhotoStore).isRequired,
+};
+
+export const Gallery = observer(GalleryView);

@@ -1,20 +1,29 @@
 import { GridCol, Image } from "@mantine/core";
 import PropTypes from "prop-types";
 
-export const Photo = ({ name, src }) => {
+import classes from "./photo.module.css";
+
+export const Photo = ({ photo, open, store }) => {
+
+  const handleClick = () => {
+    store.setOpenedPhoto(photo);
+    open();
+  }
+
   return (
-    <GridCol key={name} span={4}>
+    <GridCol key={photo.id} span={4} className={classes.photo} onClick={handleClick}>
       <Image
-        alt={name}
+        alt={photo.filename_download}
         h={300}
-        key={src}
-        src={`http://localhost:8055/assets/${src}`}
+        key={photo.filename_disk}
+        src={`http://localhost:8055/assets/${photo.filename_disk}`}
       />
     </GridCol>
   );
 };
 
 Photo.propTypes = {
-  name: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
+  open: PropTypes.func.isRequired,
+  photo: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired
 };

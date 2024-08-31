@@ -1,16 +1,18 @@
 import { MantineProvider } from "@mantine/core";
 import { themeMantine } from "./providers/theme";
 import { Header } from "../components/header/header";
-
-import "@mantine/core/styles.css";
 import { Gallery } from "../components/gallery/gallery";
 
+import "@mantine/core/styles.css";
+import { PhotoStore } from "./store/photoStore";
+
 function App() {
+  const photoStore = new PhotoStore();
   return (
     <MantineProvider theme={themeMantine}>
       <Header />
 
-      <Gallery />
+      <Gallery store={photoStore} />
     </MantineProvider>
   );
 }
