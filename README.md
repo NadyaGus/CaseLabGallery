@@ -34,6 +34,9 @@ docker compose -f docker-compose.yml -p cors up
 docker run -p "80:80" cors
 ```
 
+Данные для входа в админку:
+EMAIL: "admin@example.com"
+PASSWORD: "d1r3ctu5"
 
 ## Скриншоты работающего приложения:
 
