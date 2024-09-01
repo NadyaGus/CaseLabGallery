@@ -18,5 +18,5 @@ services:
       WEBSOCKETS_ENABLED: "true"
 
       CORS_ENABLED: "true"
-      CORS_ORIGIN: "http://localhost"
+      CORS_ORIGIN: "http://localhost,http://localhost:5173"
       CORS_METHODS: "GET,POST,PATCH,DELETE"
