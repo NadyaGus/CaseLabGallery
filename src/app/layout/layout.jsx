@@ -1,5 +1,4 @@
-// import { Outlet } from "react-router-dom";
-import { Header } from "../../components/header/header"
+import { Header } from "../../components/header/header";
 import { PhotoStore } from "../store/photoStore";
 import { Gallery } from "../../components/gallery/gallery";
 
@@ -10,8 +9,7 @@ export const Layout = () => {
     <>
       <Header />
 
-      {/* <Outlet /> */}
       <Gallery store={store} />
     </>
-  )
-}
+  );
+};
