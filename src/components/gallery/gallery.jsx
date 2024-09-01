@@ -31,7 +31,6 @@ const GalleryView = ({ store }) => {
 
   useEffect(() => {
     const page = searchParams.get("page") ?? 1;
-    console.log(page);
 
     client
       .get(`/files/?limit=${PHOTO_PER_PAGE}&page=${page}`)
