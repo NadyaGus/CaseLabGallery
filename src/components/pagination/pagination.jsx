@@ -30,28 +30,34 @@ export const Pagination = () => {
       total={totalPage}
       value={+searchParams.get("page") || 1}
       getItemProps={(page) => ({
-          component: 'a',
-          href: `?page=${page}`,
-        })}
-        getControlProps={(control) => {
-          if (control === 'first') {
-            return { component: 'a', href: '?page=1' };
-          }
+        component: "a",
+        href: `?page=${page}`,
+      })}
+      getControlProps={(control) => {
+        if (control === "first") {
+          return { component: "a", href: "?page=1" };
+        }
 
-          if (control === 'last') {
-            return { component: 'a', href: `?page=${totalPage}` };
-          }
+        if (control === "last") {
+          return { component: "a", href: `?page=${totalPage}` };
+        }
 
-          if (control === 'next') {
-            return { component: 'a', href: `?page=${+searchParams.get("page") + 1}` };
-          }
+        if (control === "next") {
+          return {
+            component: "a",
+            href: `?page=${+searchParams.get("page") + 1}`,
+          };
+        }
 
-          if (control === 'previous') {
-            return { component: 'a', href: `?page=${+searchParams.get("page") - 1}` };
-          }
+        if (control === "previous") {
+          return {
+            component: "a",
+            href: `?page=${+searchParams.get("page") - 1}`,
+          };
+        }
 
-          return {};
-        }}
+        return {};
+      }}
     ></MantinePagination>
   );
 };
