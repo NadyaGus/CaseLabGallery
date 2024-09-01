@@ -1,4 +1,4 @@
-import { autorun, makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 export class PhotoStore {
   photos = [];
@@ -6,9 +6,6 @@ export class PhotoStore {
 
   constructor() {
     makeAutoObservable(this);
-    autorun(() => {
-      this.logStoreData();
-    });
   }
 
   get totalPhotos() {
@@ -21,6 +18,10 @@ export class PhotoStore {
 
   addPhoto(photo) {
     this.photos.push(photo);
+  }
+
+  clearPhotos() {
+    this.photos = [];
   }
 
   setOpenedPhoto(photo) {

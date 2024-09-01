@@ -1,4 +1,4 @@
-import { Container, Grid, Image } from "@mantine/core";
+import { Container, Grid, Image, Pagination } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { client } from "../../service/client";
 import { Photo } from "../photo/photo";
@@ -10,16 +10,22 @@ import PropTypes from "prop-types";
 
 import classes from "./gallery.module.css";
 
+
+const PHOTO_PER_PAGE = 12;
+
 const GalleryView = ({ store }) => {
   const [photos, setPhotos] = useState([]);
 
   const [opened, { open, close }] = useDisclosure(false);
+  const [activePage, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
     client
-      .get("/files")
+      .get(`/files`)
       .then((res) => {
-        setPhotos(res.data);
+        const pages = Math.ceil(res.data.length / PHOTO_PER_PAGE) ?? 1;
+        setTotalPage(pages);
       })
       .catch((err) => {
         console.error(err);
@@ -27,10 +33,22 @@ const GalleryView = ({ store }) => {
   }, []);
 
   useEffect(() => {
-    if (photos.length > 0) {
+    if (photos && photos.length > 0) {
       photos.map((photo) => store.addPhoto(photo));
     }
   }, [photos, store]);
+
+  useEffect(() => {
+    client
+      .get(`/files/?limit=${PHOTO_PER_PAGE}&page=${activePage}`)
+      .then((res) => {
+        store.clearPhotos();
+        setPhotos(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [activePage, store]);
 
   return (
     <main>
@@ -40,6 +58,13 @@ const GalleryView = ({ store }) => {
             <Photo key={photo.id} open={open} photo={photo} store={store} />
           ))}
         </Grid>
+
+          <Pagination
+            className={classes.pagination}
+            total={totalPage}
+            value={activePage}
+            onChange={setPage}
+          />
 
         <Modal
           className={classes.modal}

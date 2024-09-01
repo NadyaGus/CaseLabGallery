@@ -1,18 +1,14 @@
 import { MantineProvider } from "@mantine/core";
 import { themeMantine } from "./providers/theme";
-import { Header } from "../components/header/header";
-import { Gallery } from "../components/gallery/gallery";
+import { RouterProvider } from "react-router-dom";
 
 import "@mantine/core/styles.css";
-import { PhotoStore } from "./store/photoStore";
+import { router } from "./router/router";
 
 function App() {
-  const photoStore = new PhotoStore();
   return (
     <MantineProvider theme={themeMantine}>
-      <Header />
-
-      <Gallery store={photoStore} />
+      <RouterProvider router={router} />
     </MantineProvider>
   );
 }
