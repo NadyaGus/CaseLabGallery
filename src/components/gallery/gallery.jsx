@@ -1,4 +1,4 @@
-import { Container, Grid, Image, Pagination } from "@mantine/core";
+import { Container, Grid, Image, Pagination, ScrollArea } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { client } from "../../service/client";
 import { Photo } from "../photo/photo";
@@ -9,7 +9,6 @@ import { Modal } from "@mantine/core";
 import PropTypes from "prop-types";
 
 import classes from "./gallery.module.css";
-
 
 const PHOTO_PER_PAGE = 12;
 
@@ -59,14 +58,16 @@ const GalleryView = ({ store }) => {
           ))}
         </Grid>
 
-          <Pagination
-            className={classes.pagination}
-            total={totalPage}
-            value={activePage}
-            onChange={setPage}
-          />
+        <Pagination
+          className={classes.pagination}
+          total={totalPage}
+          value={activePage}
+          onChange={setPage}
+        />
 
         <Modal
+          size={"lg"}
+          scrollAreaComponent={ScrollArea.Autosize}
           className={classes.modal}
           opened={opened}
           onClose={close}
@@ -74,9 +75,12 @@ const GalleryView = ({ store }) => {
           trapFocus={false}
           title={store.openedPhoto?.title ?? "No title"}
         >
-          <Image
-            src={`http://localhost:8055/assets/${store.openedPhoto?.filename_disk}`}
-          ></Image>
+          <Modal.Body>
+            <Image
+              alt={store.openedPhoto?.filename_download}
+              src={`http://localhost:8055/assets/${store.openedPhoto?.filename_disk}`}
+            ></Image>
+          </Modal.Body>
         </Modal>
       </Container>
     </main>
