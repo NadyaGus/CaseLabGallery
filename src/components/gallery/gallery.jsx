@@ -1,4 +1,4 @@
-import { Container, Grid, Image, Pagination, ScrollArea } from "@mantine/core";
+import { Container, Grid, Image, ScrollArea } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { client } from "../../service/client";
 import { Photo } from "../photo/photo";
@@ -11,27 +11,17 @@ import PropTypes from "prop-types";
 import { BASE_URL } from "../../app/variables";
 
 import classes from "./gallery.module.css";
+import { Pagination } from "../pagination/pagination";
+import { useSearchParams } from "react-router-dom";
 
-const PHOTO_PER_PAGE = 12;
+export const PHOTO_PER_PAGE = 12;
 
 const GalleryView = ({ store }) => {
   const [photos, setPhotos] = useState([]);
 
   const [opened, { open, close }] = useDisclosure(false);
-  const [activePage, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
 
-  useEffect(() => {
-    client
-      .get(`/files`)
-      .then((res) => {
-        const pages = Math.ceil(res.data.length / PHOTO_PER_PAGE) ?? 1;
-        setTotalPage(pages);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (photos && photos.length > 0) {
@@ -40,8 +30,11 @@ const GalleryView = ({ store }) => {
   }, [photos, store]);
 
   useEffect(() => {
+    const page = searchParams.get("page") ?? 1;
+    console.log(page);
+
     client
-      .get(`/files/?limit=${PHOTO_PER_PAGE}&page=${activePage}`)
+      .get(`/files/?limit=${PHOTO_PER_PAGE}&page=${page}`)
       .then((res) => {
         store.clearPhotos();
         setPhotos(res.data);
@@ -49,7 +42,7 @@ const GalleryView = ({ store }) => {
       .catch((err) => {
         console.error(err);
       });
-  }, [activePage, store]);
+  }, [store, searchParams]);
 
   return (
     <main>
@@ -60,12 +53,7 @@ const GalleryView = ({ store }) => {
           ))}
         </Grid>
 
-        <Pagination
-          className={classes.pagination}
-          total={totalPage}
-          value={activePage}
-          onChange={setPage}
-        />
+        <Pagination />
 
         <Modal
           size={"lg"}
