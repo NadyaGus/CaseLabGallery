@@ -8,6 +8,8 @@ import { PhotoStore } from "../../app/store/photoStore";
 import { Modal } from "@mantine/core";
 import PropTypes from "prop-types";
 
+import { BASE_URL } from "../../app/variables";
+
 import classes from "./gallery.module.css";
 
 const PHOTO_PER_PAGE = 12;
@@ -78,7 +80,7 @@ const GalleryView = ({ store }) => {
           <Modal.Body>
             <Image
               alt={store.openedPhoto?.filename_download}
-              src={`http://localhost:8055/assets/${store.openedPhoto?.filename_disk}`}
+              src={`${BASE_URL}/assets/${store.openedPhoto?.filename_disk}`}
             ></Image>
           </Modal.Body>
         </Modal>

@@ -1,5 +1,7 @@
 import { Anchor, Container, Title } from "@mantine/core";
 
+import { BASE_URL } from "../../app/variables";
+
 export const Header = () => {
   return (
     <header>
@@ -9,7 +11,7 @@ export const Header = () => {
         </Title>
 
         <Anchor
-          href="http://localhost:8055/admin/files"
+          href={`${BASE_URL}/admin/files`}
           display={"block"}
           c={"white"}
           ta={"center"}

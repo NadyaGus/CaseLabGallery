@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8055";
+import { BASE_URL } from "../app/variables";
 
 export const client = {
   get: async (url) => {

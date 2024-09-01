@@ -1,6 +1,8 @@
 import { GridCol, Image } from "@mantine/core";
 import PropTypes from "prop-types";
 
+import { BASE_URL } from "../../app/variables";
+
 import classes from "./photo.module.css";
 
 export const Photo = ({ photo, open, store }) => {
@@ -17,7 +19,7 @@ export const Photo = ({ photo, open, store }) => {
         alt={photo.filename_download}
         h={300}
         key={photo.filename_disk}
-        src={`http://localhost:8055/assets/${photo.filename_disk}`}
+        src={`${BASE_URL}/assets/${photo.filename_disk}`}
       />
     </GridCol>
   );
