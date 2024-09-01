@@ -30,8 +30,10 @@ C самим React'ом никаких проблем не было, хотя ж
 npm install
 docker build -t cors .
 cd directus
-docker compose up
+docker compose -f docker-compose.yml -p cors up
+docker run -p "80:80" cors
 ```
+
 
 ## Скриншоты работающего приложения:
 

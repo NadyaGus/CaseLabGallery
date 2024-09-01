@@ -8,6 +8,7 @@ services:
       - ./database:/directus/database
       - ./uploads:/directus/uploads
       - ./extensions:/directus/extensions
+      - "./nginx/nginx.conf://etc/nginx/nginx.conf:ro"
     environment:
       SECRET: "replace-with-secure-random-value"
       ADMIN_EMAIL: "admin@example.com"
@@ -17,5 +18,5 @@ services:
       WEBSOCKETS_ENABLED: "true"
 
       CORS_ENABLED: "true"
-      CORS_ORIGIN: "http://localhost:5173"
+      CORS_ORIGIN: "http://localhost"
       CORS_METHODS: "GET,POST,PATCH,DELETE"
